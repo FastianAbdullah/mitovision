@@ -17,7 +17,7 @@
 
 
     <!-- Details Tab -->
-    {{-- @include('sections.details') --}}
+    @include('sections.imageupload')
    
     <!-- end of services -->
     
