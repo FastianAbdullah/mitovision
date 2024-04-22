@@ -13,19 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Images',function(Blueprint $table){
-            $table->unsignedInteger('imgID')->primary();
+        Schema::create('images',function(Blueprint $table){
+            $table->id();
             $table->string('imgurl')->nullable(false);
-            $table->unsignedInteger('userID');
-           // $table->foreign('userID')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('PatientID')->nullable(false);
-            $table->string('PatientName');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('patiend_id')->nullable(false);
+            $table->string('patient_name');
         });
 
-        //Defining foreign key contraints
-        Schema::table('Images',function(Blueprint $table){
-            $table->foreign('userID')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-        });
+    //  
     }
 
     /**

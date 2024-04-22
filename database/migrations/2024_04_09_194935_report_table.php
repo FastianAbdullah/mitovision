@@ -14,17 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('report',function (Blueprint $table){
-            $table->unsignedInteger('reportID')->primary();
-            $table->unsignedInteger('userID');
-            $table->unsignedInteger('imgID');
-            $table->string('Prediction');
-            $table->dateTime('ResTime');
-            $table->string('Description');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('image_id');
+            $table->string('prediction');
+            $table->dateTime('res_time');
+            $table->string('description');
         });
 
         Schema::table('report',function(Blueprint $table){
-            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('imgID')->references('imgID')->on('Images')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

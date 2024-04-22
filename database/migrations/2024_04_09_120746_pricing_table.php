@@ -11,13 +11,13 @@ return new class extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('pricing', function (Blueprint $table) {
-            $table->id('pid')->primary();
-            $table->string('Plan')->nullable(false);
-            $table->dateTime('StartDate')->nullable(false);
-            $table->dateTime('EndDate')->nullable(false);
+            $table->id();
+            $table->string('plan');
+            $table->timestamps();
         });
 
     }

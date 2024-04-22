@@ -18,10 +18,10 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'ID' => $this->faker->unique()->numberBetween(0,1000),
+           
             'name' => $this->faker->name(),
             'email' =>$this->faker->unique()->safeEmail(),
-            'PID' => PricingModel::all()->random()->pid,
+            'pricing_id' => 1,
             'password' => $this->faker->password(),
         ];
     }

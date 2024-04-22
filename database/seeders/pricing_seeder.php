@@ -18,15 +18,15 @@ class pricing_seeder extends Seeder
     {
 
         $plans = [
-            'Platinum',
+            'Free',
             'Gold',
-            'Silver'
+            'Platinum'
         ];
 
-        for($id = 2; $id<4; $id++){
+        for($id = 1; $id<4; $id++){
             PricingModel::create([
-                'pid' => $id,
-                'Plan' => $plans[$id-1],
+                'id' => $id,
+                'plan' => $plans[$id-1],
                 ]
             );      
         }

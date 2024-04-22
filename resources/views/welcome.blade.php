@@ -47,15 +47,16 @@
     
     <!-- end of team -->
 
+    @include('sections.donation')
 
     <!-- About -->
-    @include('sections.about')
+    {{-- @include('sections.about') --}}
    
     <!-- end of about -->
 
 
     <!-- Contact -->
-    @include('sections.contact-form')
+    {{-- @include('sections.contact-form') --}}
    
     <!-- end of contact -->
 
