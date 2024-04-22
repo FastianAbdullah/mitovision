@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">SERVICES</div>
-                <h2>Choose The Service Package<br> That Suits Your Needs</h2>
+            <h2>Choose The Service Package<br> That Suits Your Needs</h2>
             </div> <!-- end of col -->
         </div> <!-- end of row -->
         <div class="row">

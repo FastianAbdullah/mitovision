@@ -36,8 +36,8 @@
 </head>
 
 <body data-spy="scroll" data-target=".fixed-top">
-
-    @include('partials._header')
+{{-- 
+    @include('partials._header') --}}
 
     
     @yield('content')
@@ -46,10 +46,10 @@
     @yield('script')
 
     
-    @include('partials._footer')
+    {{-- @include('partials._footer')
     
 
-    @include('partials._scripts')
+    @include('partials._scripts') --}}
 
 </body>
 </html>

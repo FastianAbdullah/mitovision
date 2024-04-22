@@ -363,7 +363,7 @@ select::-ms-expand {
 
 input[type='checkbox'] {
 	vertical-align: -15%;
-	margin-right: 0.375rem;
+	margin-right: 14.375rem;
 }
 
 /* IE10+ hack to raise checkbox field position compared to the rest of the browsers */

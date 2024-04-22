@@ -30,7 +30,7 @@ class ImageController extends Controller
             ]);
     
             // Handle the API response as needed
-            if ($response->successful()) {
+            if ($response->successful()) {  
                 $predictions = $response->json();
                 
                 return response()->json($predictions);
