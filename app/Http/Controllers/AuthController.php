@@ -31,6 +31,7 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
@@ -47,7 +48,7 @@ class AuthController extends Controller
     
         if(\Auth::attempt($request->only('email', 'password')))
         {
-            return redirect('auth.login');
+            return redirect('login');
         }
     
         return redirect('register')->withErrors('Error');
@@ -58,7 +59,7 @@ class AuthController extends Controller
     {
         \Session::flush();
         \Auth::logout();
-        return redirect('login');
+        return redirect('/');
     }
     public function home()
     {

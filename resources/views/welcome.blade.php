@@ -10,17 +10,12 @@
     
     <!-- end of intro -->
 
+    @include('sections.imageupload')
+    
     <!-- Services -->
     @include('sections.services')
    
     <!-- end of services -->
-
-
-    <!-- Details Tab -->
-    @include('sections.imageupload')
-   
-    <!-- end of services -->
-    
 
     <!-- Testimonials -->
 

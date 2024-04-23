@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
-
+use App\Http\Controllers\StripeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ use App\Http\Controllers\ImageController;
 */
 Route::get('/', function () {return view('welcome');});
 
-Route::post('/upload-image', [ImageController::class, 'upload']);
+
 
 Route::group(['middleware' => 'guest'],function()
 {
@@ -32,6 +32,13 @@ Route::group(['middleware' => 'guest'],function()
 
 Route::group(['middleware' => 'auth'],function()
 {
+    Route::post('/upload-image', [ImageController::class, 'upload']);
     Route::get('/home',[AuthController::class,'home'])->name('home');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+// Route::get('/', [StripeController::class,'checkout'])->name('checkout');
+
+Route::post('/session', [StripeController::class,'session'])->name('session');
+
+Route::get('/success', [StripeController::class,'session'])->name('success');
