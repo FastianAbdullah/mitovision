@@ -33,7 +33,15 @@ class ImageController extends Controller
             if ($response->successful()) {  
                 $predictions = $response->json();
                 
-                return response()->json($predictions);
+                // Additional parameters from the API
+                $outputs = $predictions['outputs']; // Replace 'output' with the actual key from the API response
+                $result = $predictions['prediction']; // Replace 'prediction' with the actual key from the API response
+                
+                // Create an associative array with multiple parameters
+                return view('welcome', [
+                    'outputs' => $outputs,
+                    'result' => $result
+                ]);
             } 
             else {
                 $errorMessage = 'Failed to get predictions from the API.';

@@ -34,6 +34,41 @@
                     <!-- Get Prediction Button -->
                     <button type="submit" class="btn btn-primary">Get Prediction</button>
                 </form>
+
+                <!-- Prediction Outputs -->
+                @if(isset($outputs))
+                    <div class="mt-3">
+                        <strong>Output:</strong>
+                        <div class="bar-container">
+                            @php $total = array_sum(array_values($outputs)); @endphp
+                            @php $categories = array_keys($outputs); @endphp
+                            @php $percentages = array_values($outputs); @endphp
+                            @for($i = 0; $i < count($outputs); $i++)
+                                <div class="bar-item">
+                                    <div class="bar-label" style="position: absolute; left: 23px;">
+                                        @if($categories[$i] == 0)
+                                            Mitosis
+                                        @elseif($categories[$i] == 1)
+                                            Normal
+                                        @else
+                                            {{ $categories[$i] }}
+                                        @endif
+                                    </div>
+                                    <div class="bar" style="width: {{ ($percentages[$i] / $total) * 100 }}%; margin-bottom: 10px; height: 20px; background-color: {{ $categories[$i] == 0 ? '#ff6347' : ($categories[$i] == 1 ? '#98fb98' : '#007BFF') }}; margin-right: 10px; border-radius: 2px; transition: width 0.3s ease-in-out;">
+                                        <div class="bar-percentage" style="font-size: 14px; color: #000000; position: absolute; right: 170px;">{{ round($percentages[$i]*100) }}%</div>
+                                        <br><br>
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Prediction Result -->
+                @if(isset($result))
+                    <div class="alert alert-info mt-3">
+                        <strong>Result:</strong> This image is highly likely to be <strong> {{ $result }}</strong>.
+                    </div>
+                @endif
             </div>
         </div>
     </div>

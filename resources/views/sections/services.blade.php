@@ -30,7 +30,7 @@
                         <p class="price">Complimentary <span>0$ / mo</span></p>
                     </div>
                     <div class="button-container">
-                        <a class="btn-solid-reg page-scroll" href="#callMe">Sign Up for Free</a>
+                        <a href="{{ route('register') }}" class="btn-solid-reg page-scroll" href="#callMe">Sign Up for Free</a>
                     </div> <!-- end of button-container -->
                 </div>
                 

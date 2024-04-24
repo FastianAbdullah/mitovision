@@ -27,6 +27,7 @@ class AuthController extends Controller
     }
     public function register_view(Request $request)
     {
+        // dd("ewr");
         return view('auth.register');
     }
     public function register(Request $request)
