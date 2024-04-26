@@ -10,19 +10,19 @@ class Image extends Model
     use HasFactory;
 
     protected $table = 'Images';
-
+    public $timestamps = false;
     protected $primaryKey = 'imgID';
 
     protected $fillable = [
         'imgurl',
-        'userID',
-        'PatientID',
-        'PatientName',
+        'user_id',
+        'patiend_id',
+        'patient_name',
     ];
 
     // Define the relationship with the User model
     public function user()
     {
-        return $this->belongsTo(User::class, 'userID');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

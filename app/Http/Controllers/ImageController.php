@@ -11,11 +11,25 @@ class ImageController extends Controller
 {
     public function upload(Request $request)
     {
-        // Validate the request data
-        // $request->validate([
-        //     'image' => 'required|image|max:2048', // max 2MB
-        // ]);
+        $validatedData = $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust file validation rules as needed
+            'patient_id' => 'required|integer',
+            'patient_name' => 'required|string',
+        ]);
+
+        $imageName = $request->file('image');
+        $imageUrl = '/images/'.$imageName; // Assuming images are stored in public/images directory
     
+        // Create a new image record in the database
+        $imageData = [
+            'imgurl' => $imageUrl,
+            'user_id' => auth()->user()->id, // Assuming the user is authenticated
+            'patiend_id' => $validatedData['patient_id'],
+            'patient_name' => $validatedData['patient_name'],
+        ];
+    
+        Image::create($imageData);
+
         // Check if the request has the file
         if ($request->hasFile('image')) {
             // Get the file from the request
@@ -24,7 +38,7 @@ class ImageController extends Controller
             // Store the uploaded file in the storage/app/public directory
             $path = $request->file('image')->store('images', 'public');
            
-            // Send Image Filename to Flask API
+            // Sending the  Image Filename to Flask API
             $response = Http::get('http://127.0.0.1:5001/predict', [
                 'image_filename' => basename($path),
             ]);
@@ -33,11 +47,11 @@ class ImageController extends Controller
             if ($response->successful()) {  
                 $predictions = $response->json();
                 
-                // Additional parameters from the API
-                $outputs = $predictions['outputs']; // Replace 'output' with the actual key from the API response
-                $result = $predictions['prediction']; // Replace 'prediction' with the actual key from the API response
+             
+                $outputs = $predictions['outputs']; 
+                $result = $predictions['prediction']; 
                 
-                // Create an associative array with multiple parameters
+             
                 return view('welcome', [
                     'outputs' => $outputs,
                     'result' => $result
