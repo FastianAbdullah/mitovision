@@ -22,14 +22,12 @@
                 <a class="nav-link page-scroll" href="#services">SERVICES</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#callMe">PRICING</a>
+                <a class="nav-link page-scroll" href="#upload">PREDICT</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#projects">TESTIMONIALS</a>
+                <a class="nav-link page-scroll" href="#testimonials">TESTIMONIALS</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link page-scroll" href="#FAQs">FAQs</a>
-            </li>
+{{--            
 
             <!-- Dropdown Menu -->          
             <li class="nav-item dropdown">
@@ -39,11 +37,11 @@
                     <div class="dropdown-items-divide-hr"></div>
                     <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY POLICY</span></a>
                 </div>
-            </li>
+            </li> --}}
             <!-- end of dropdown menu -->
 
             <li class="nav-item">
-                <a class="nav-link page-scroll" href="#contact">CONTACT</a>
+                <a class="nav-link page-scroll" href="#footer">CONTACT</a>
             </li>
 
             <!-- Conditional Logout Button -->

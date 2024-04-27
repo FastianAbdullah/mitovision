@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
@@ -11,70 +12,92 @@ class ImageController extends Controller
 {
     public function upload(Request $request)
     {
-        $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust file validation rules as needed
-            'patient_id' => 'required|integer',
-            'patient_name' => 'required|string',
+        // Validate request data
+        $validatedData = $this->validateImageData($request);
+    
+        // Create or update patient record
+        $patient = $this->createOrUpdatePatient($validatedData);
+    
+        // Handle image upload
+        $response = $this->handleImageUpload($request, $validatedData, $patient);
+    
+        // Handle API response
+        return $this->handleApiResponse($response);
+    }
+    
+    private function validateImageData(Request $request)
+    {
+        return $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust file validation rules as needed
+            'patient_phone' => 'string|required|size:11',
+            'patient_name' => '',
+            'gender' => '',
+            'blood_group' => '',
+            'address' => '',
         ]);
-
-     
-     
+    }
     
-        // Create a new image record in the database
-       
+    private function createOrUpdatePatient($validatedData)
+    {
+        return Patient::firstOrCreate(
+            ['phone' => $validatedData['patient_phone']],
+            [
+                'name' => $validatedData['patient_name'],
+                'gender' => $validatedData['gender'],
+                'blood_group' => $validatedData['blood_group'],
+                'address' => $validatedData['address'],
+            ]
+        );
+    }
     
-        
-
-        // Check if the request has the file
+    private function handleImageUpload(Request $request, $validatedData, $patient)
+    {
         if ($request->hasFile('image')) {
-            // Get the file from the request
-            $image = $request->file('image');
-    
             // Store the uploaded file in the storage/app/public directory
             $path = $request->file('image')->store('images', 'public');
             $imageUrl = $path;
-            // Sending the  Image Filename to Flask API
-            $response = Http::get('http://127.0.0.1:5001/predict', [
-                'image_filename' => basename($path),
+    
+            // Create a new image record associated with the patient
+            $image = new Image([
+                'image' => $imageUrl,
+                'user_id' => auth()->user()->id,
             ]);
     
-            // Handle the API response as needed
-            if ($response->successful()) {  
-                $predictions = $response->json();
-                
-             
-                $outputs = $predictions['outputs']; 
-                $result = $predictions['prediction']; 
-                
-                $imageData = [
-                    'imgurl' => $imageUrl,
-                    'user_id' => auth()->user()->id, // Assuming the user is authenticated
-                    'patiend_id' => $validatedData['patient_id'],
-                    'patient_name' => $validatedData['patient_name'],
-                ];
-             
-                Image::create($imageData);
-
-                return view('welcome', [
-                    'outputs' => $outputs,
-                    'result' => $result
-                ]);
-            } 
-            else {
-                $errorMessage = 'Failed to get predictions from the API.';
-                $statusCode = $response->status();
-                $imagePath = storage_path("app/$path");
+            // Associate the image with the patient and save it
+            $patient->images()->save($image);
     
-                // Print the image path
-                error_log("Image Path: $imagePath");
-    
-                // Return error message with status code
-                return response()->json(['error' => $errorMessage, 'image_path' => $imagePath], $statusCode);
-            }
+            // Sending the Image Filename to Flask API
+            return Http::get('http://127.0.0.1:5001/predict', [
+                'image_filename' => basename($path),
+            ]);
         }
-    
-        
-        // Return error message if no file is uploaded
-        return response()->json(['error' => 'No image uploaded.'], 400);
     }
+    
+    private function handleApiResponse($response)
+    {
+        if ($response->successful()) {
+            $predictions = $response->json();
+            $outputs = $predictions['outputs'];
+            $result = $predictions['prediction'];
+    
+            return view('welcome', [
+                'outputs' => $outputs,
+                'result' => $result
+            ]);
+        } else {
+            $errorMessage = 'Failed to get predictions from the API.';
+            $statusCode = $response->status();
+            // $imagePath = storage_path("app/$path");
+    
+            // Flash API error message to session
+            session()->flash('api_error', 'Failed to get predictions from the API.');
+    
+            // Redirect back with validation errors
+            return back()->withErrors([
+                'api_error' => 'Failed to get predictions from the API.',
+                'image' => 'No image uploaded.',
+            ]);
+        }
+    }
+    
 }

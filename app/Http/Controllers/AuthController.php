@@ -43,7 +43,7 @@ class AuthController extends Controller
             'name' => $request->name, // Using 'name' from request
             'email' => $request->email,
             'password' => \Hash::make($request->password),
-            'pricing_id' => 1
+            'plan_id' => 1
         ]);
     
     

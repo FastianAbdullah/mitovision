@@ -20,7 +20,7 @@ return new class extends Migration
             if (!Schema::hasColumn('images', 'user_id')) {
                 $table->unsignedBigInteger('user_id');
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-                $table->unsignedBigInteger('patient_id');
+                $table->unsignedBigInteger('patient_id'); 
                 $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
             
             }

@@ -33,5 +33,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 
 }

@@ -13,12 +13,16 @@ class Image extends Model
         'image',
         'user_id',
         'patiend_id',
-        'patient_name',
     ];
 
     // Define the relationship with the User model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_phone', 'phone');
     }
 }

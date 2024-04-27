@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" id="upload">
     <div class="row">
         <!-- Left Column -->
         <div class="col-md-6">
@@ -9,7 +9,7 @@
         </div>
 
         <!-- Right Column -->
-        
+
         <div class="col-md-6 d-flex align-items-center justify-content-center">
             <!-- Enhanced Dotted Box -->
             <div
@@ -17,42 +17,48 @@
                 <!-- Upload Image Form -->
                 <form action="/upload-image" method="post" enctype="multipart/form-data" id="upload-form">
                     @csrf <!-- CSRF token -->
-        
+
                     <!-- First Row: Patient ID and Patient Name -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="patientId" class="form-label">Patient ID</label>
-                            <input type="text" class="form-control" id="patientId" name="patient_id" required>
+                            <label for="patientPhone" class="form-label">Patient Phone Number</label>
+                            <input type="text" class="form-control" id="patientPhone" name="patient_phone" required>
                         </div>
                         <div class="col-md-6">
                             <label for="patientName" class="form-label">Patient Name</label>
-                            <input type="text" class="form-control" id="patientName" name="patient_name" required>
+                            <input type="text" class="form-control" id="patientName" name="patient_name">
                         </div>
                     </div>
-        
+
                     <!-- Second Row: Gender and Blood Group -->
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="gender" class="form-label">Gender</label>
-                            <input type="text" class="form-control" id="gender" name="gender" required>
+                            <input type="text" class="form-control" id="gender" name="gender">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="bloodGroup" class="form-label">Blood Group</label>
-                            <input type="text" class="form-control" id="bloodGroup" name="blood_group" required>
+                            <input type="text" class="form-control" id="bloodGroup" name="blood_group">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
                         </div>
                     </div>
-        
+
                     <!-- Upload Image Button -->
                     <div class="mb-3 d-flex align-items-center justify-content-center">
-                        <input type="file" class="form-control" id="imageUpload" name="image" style="display:none;" required onchange="displayImageName()">
-                        <button type="button" class="btn btn-secondary" onclick="checkLoginAndUpload()">Select Image</button>
+                        <input type="file" class="form-control" id="imageUpload" name="image" style="display:none;"
+                            onchange="displayImageName()">
+                        <button type="button" class="btn btn-secondary" onclick="checkLoginAndUpload()">Select
+                            Image</button>
                     </div>
-        
+
                     <!-- Display Uploaded Image Name -->
                     <div id="imageNameDisplay" class="mb-3" style="display:none;">
                         <strong>Uploaded Image:</strong> <span id="imageName"></span>
                     </div>
-        
+
                     <!-- Get Prediction Button -->
                     <button type="submit" class="btn btn-primary">Get Prediction</button>
                 </form>
@@ -95,6 +101,16 @@
                             {{ $result }}</strong>.
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul style="text-align: left;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
             </div>
         </div>
 

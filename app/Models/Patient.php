@@ -10,11 +10,15 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
+        'phone',
         'name',
         'number',
         'blood_group',
         'gender',
         'address'
     ];
-
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 }
