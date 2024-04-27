@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-
-    protected $table = 'Images';
-    public $timestamps = false;
-    protected $primaryKey = 'imgID';
-
+    // public $timestamps = false;
     protected $fillable = [
-        'imgurl',
+        'image',
         'user_id',
         'patiend_id',
         'patient_name',
@@ -23,6 +19,6 @@ class Image extends Model
     // Define the relationship with the User model
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

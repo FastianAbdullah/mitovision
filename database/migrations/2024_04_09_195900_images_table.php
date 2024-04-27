@@ -15,11 +15,7 @@ return new class extends Migration
     {
         Schema::create('images',function(Blueprint $table){
             $table->id();
-            $table->string('imgurl')->nullable(false);
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('patiend_id')->nullable(false);
-            $table->string('patient_name');
+            $table->string('image');
         });
 
     //  

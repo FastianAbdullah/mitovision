@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'pricing_id',  //foreign key from pricing.
+        'plan_id',  //foreign key from pricing.
     ];
 
     /**

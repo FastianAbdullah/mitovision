@@ -17,18 +17,13 @@ class ImageController extends Controller
             'patient_name' => 'required|string',
         ]);
 
-        $imageName = $request->file('image');
-        $imageUrl = '/images/'.$imageName; // Assuming images are stored in public/images directory
+     
+     
     
         // Create a new image record in the database
-        $imageData = [
-            'imgurl' => $imageUrl,
-            'user_id' => auth()->user()->id, // Assuming the user is authenticated
-            'patiend_id' => $validatedData['patient_id'],
-            'patient_name' => $validatedData['patient_name'],
-        ];
+       
     
-        Image::create($imageData);
+        
 
         // Check if the request has the file
         if ($request->hasFile('image')) {
@@ -37,7 +32,7 @@ class ImageController extends Controller
     
             // Store the uploaded file in the storage/app/public directory
             $path = $request->file('image')->store('images', 'public');
-           
+            $imageUrl = $path;
             // Sending the  Image Filename to Flask API
             $response = Http::get('http://127.0.0.1:5001/predict', [
                 'image_filename' => basename($path),
@@ -51,7 +46,15 @@ class ImageController extends Controller
                 $outputs = $predictions['outputs']; 
                 $result = $predictions['prediction']; 
                 
+                $imageData = [
+                    'imgurl' => $imageUrl,
+                    'user_id' => auth()->user()->id, // Assuming the user is authenticated
+                    'patiend_id' => $validatedData['patient_id'],
+                    'patient_name' => $validatedData['patient_name'],
+                ];
              
+                Image::create($imageData);
+
                 return view('welcome', [
                     'outputs' => $outputs,
                     'result' => $result
@@ -70,6 +73,7 @@ class ImageController extends Controller
             }
         }
     
+        
         // Return error message if no file is uploaded
         return response()->json(['error' => 'No image uploaded.'], 400);
     }
