@@ -12,6 +12,7 @@ class ImageController extends Controller
 {
     public function upload(Request $request)
     {
+     
         // Validate request data
         $validatedData = $this->validateImageData($request);
     
@@ -80,7 +81,7 @@ class ImageController extends Controller
             $outputs = $predictions['outputs'];
             $result = $predictions['prediction'];
     
-            return view('welcome', [
+            return response()->json([
                 'outputs' => $outputs,
                 'result' => $result
             ]);
@@ -92,12 +93,13 @@ class ImageController extends Controller
             // Flash API error message to session
             session()->flash('api_error', 'Failed to get predictions from the API.');
     
-            // Redirect back with validation errors
-            return back()->withErrors([
-                'api_error' => 'Failed to get predictions from the API.',
-                'image' => 'No image uploaded.',
-            ]);
+            // Return JSON response with error message
+            return response()->json([
+                'error' => 'Failed to get predictions from the API.',
+                'status_code' => $statusCode
+            ], $statusCode); // Return appropriate status code
         }
     }
+    
     
 }
