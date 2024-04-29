@@ -17,7 +17,7 @@ use App\Http\Controllers\StripeController;
 */
 Route::get('/', function () {return view('welcome');});
 
-Route::get('/dashboard', function () {return view('layouts.admin.app');});
+Route::get('/dashboard', function () {return view('layouts.doctor.app');});
 
 Route::group(['middleware' => 'guest'],function()
 {
@@ -32,13 +32,20 @@ Route::group(['middleware' => 'guest'],function()
 
 Route::group(['middleware' => 'auth'],function()
 {
+    //Authenticated User Routes
+    
     Route::post('/upload-image', [ImageController::class, 'upload']);
     Route::get('/home',[AuthController::class,'home'])->name('home');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+
+    //Dashboard routes
+
+    Route::get('/admin/dashboard', [AuthController::class, 'admin_dashboard'])->name('admin.dashboard');
+    Route::get('/doctor/dashboard', [AuthController::class, 'doctor_dashboard'])->name('doctor.dashboard');
 });
 
+//Stripe Routes
+
 // Route::get('/', [StripeController::class,'checkout'])->name('checkout');
-
 Route::post('/session', [StripeController::class,'session'])->name('session');
-
 Route::get('/success', [StripeController::class,'session'])->name('success');

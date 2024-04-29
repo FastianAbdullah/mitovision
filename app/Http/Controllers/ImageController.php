@@ -40,6 +40,7 @@ class ImageController extends Controller
     
     private function createOrUpdatePatient($validatedData)
     {
+       
         return Patient::firstOrCreate(
             ['phone' => $validatedData['patient_phone']],
             [

@@ -12,7 +12,9 @@
     <title>Mitovision Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -20,7 +22,7 @@
     {{-- <link href="public/admin/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="public/admin/css/sb-admin-2.min.css" rel="stylesheet" type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('css/admin/sb-admin-2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/all.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/admin/all.min.css') }}"> --}}
 </head>
 
 <body id="page-top">
@@ -62,9 +64,20 @@
     
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables"
+                   aria-expanded="true" aria-controls="collapseTables">
+                    <i class="fas fa-fw fa-user-md"></i>
+                    <span>Tables</span>
+                </a>
+                <div id="collapseTables" class="collapse" aria-labelledby="headingTables data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Tables:</h6>
+                        <a class="collapse-item" href="#">Users Table</a>
+                        <a class="collapse-item" href="#">Patients Table</a>
+                        <a class="collapse-item" href="#">Reports Table</a>
+                        <a class="collapse-item" href="#">Invoices Table</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -77,7 +90,7 @@
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                <img class="sidebar-card-illustration mb-2"  src="{{asset('images/undraw_rocket.svg')}}"> alt="...">
                 <p class="text-center mb-2"><strong>Mitovision</strong> is packed with premium features, components, and more!</p>
                 <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
@@ -265,7 +278,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mohammad Abdullah</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                src="{{asset('images/undraw_profile.svg')}}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
