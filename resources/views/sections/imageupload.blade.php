@@ -145,7 +145,7 @@
             setTimeout(function() {
                 uploadImage(); // Call function to upload image after 3 seconds
 
-            }, 200);
+            },100);
         @endguest
         }
 

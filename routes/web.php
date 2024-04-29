@@ -15,9 +15,9 @@ use App\Http\Controllers\StripeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {return view('welcome');});
+Route::get('/', function () {return view('welcome');});
 
-
+Route::get('/dashboard', function () {return view('layouts.admin.app');});
 
 Route::group(['middleware' => 'guest'],function()
 {
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'],function()
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });
 
-Route::get('/', [StripeController::class,'checkout'])->name('checkout');
+// Route::get('/', [StripeController::class,'checkout'])->name('checkout');
 
 Route::post('/session', [StripeController::class,'session'])->name('session');
 
