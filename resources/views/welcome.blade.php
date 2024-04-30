@@ -21,39 +21,9 @@
 
     @include('sections.testimonials')
 
-    <!-- end of testimonials -->
-
-
-    <!-- Call Me -->
-
-    {{-- @include('sections.contact') --}}
-    
-    <!-- end of call me -->
-
-
-    <!-- Projects -->
-
-    {{-- @include('sections.projects') --}}
-	
-    <!-- end of projects -->
-
-    <!-- Team -->
-    {{-- @include('sections.team') --}}
-    
-    <!-- end of team -->
 
     @include('sections.donation')
 
-    <!-- About -->
-    {{-- @include('sections.about') --}}
-   
-    <!-- end of about -->
-
-
-    <!-- Contact -->
-    {{-- @include('sections.contact-form') --}}
-   
-    <!-- end of contact -->
 
 
 @endsection

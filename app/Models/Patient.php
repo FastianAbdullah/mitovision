@@ -21,4 +21,8 @@ class Patient extends Model
     {
         return $this->hasMany(Image::class);
     }
+    public function doctor()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

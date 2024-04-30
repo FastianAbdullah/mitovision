@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StripeController;
-
+use App\Http\Controllers\PatientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'],function()
 
     Route::get('/admin/dashboard', [AuthController::class, 'admin_dashboard'])->name('admin.dashboard');
     Route::get('/doctor/dashboard', [AuthController::class, 'doctor_dashboard'])->name('doctor.dashboard');
+
+    Route::get('/doctors/patients', [PatientController::class, 'index'])->name('admin.doctors.patients.index');
 });
 
 //Stripe Routes
