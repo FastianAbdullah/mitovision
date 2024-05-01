@@ -27,14 +27,13 @@
                                     <div class="media-body">Upload {{$plan['max_images']}} images monthly</div>
                                 </li>
                             </ul>
-                            <p class="price">Starting at <span>{{$plan['price']}} / mo</span></p>
+                            <p class="price">Starting at <span>&#163;{{$plan['price']}} / mo</span></p>
                         </div>
                         <div class="button-container">
                             @if($plan['id'] == 1)
                                 <a href="{{ route('register') }}" class="btn-solid-reg page-scroll">Sign Up for Free</a>
                             @else
-                                {{-- <a class="btn-solid-reg page-scroll" href="{{route('session')}}">Subscribe Now</a> --}}
-                                <form action="{{ route('session') }}" method="POST">
+                                <form action="{{ route('session' , ['id' => $plan['id'] ]) }}" method="POST">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <button class="btn-solid-reg page-scroll" type="submit" id="checkout-live-button">Subscribe Now</button>
                                 </form>

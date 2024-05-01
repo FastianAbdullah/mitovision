@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\Plan;
 class AuthController extends Controller
 {
     //
@@ -66,6 +67,7 @@ class AuthController extends Controller
     }
     public function home()
     {
-        return view('welcome');
+        $plans = Plan::all();
+        return view('welcome',compact('plans'));
     }
 }
