@@ -219,7 +219,7 @@
         }
 
         function showLoader() {
-            $("#loader").removeClass("d-none");
+            // $("#loader").removeClass("d-none");
         }
 
         // Function to hide loader
