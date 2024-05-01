@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/swiper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    
 
 	
 	<!-- Favicon  -->

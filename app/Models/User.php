@@ -8,16 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 //use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 
+use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    
-    // protected $stripeKey;
-    // public function __construct($stripeKey)
-    // {
-    //     $this->stripeKey = $stripeKey;
-    // }
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,6 +40,10 @@ class User extends Authenticatable
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
     }
 
 

@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StripeController;
-
+use App\Http\Controllers\PatientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +31,8 @@ Route::group(['middleware' => 'guest'],function()
 
 Route::group(['middleware' => 'auth'],function()
 {
-    //user validation
+    //Authenticated User Routes
+    
     Route::post('/upload-image', [ImageController::class, 'upload']);
     Route::get('/home',[AuthController::class,'home'])->name('home');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
@@ -39,6 +40,17 @@ Route::group(['middleware' => 'auth'],function()
     //stripe control
     Route::post('/session', [StripeController::class,'session'])->name('session');
     Route::get('/success', [StripeController::class,'success'])->name('success');
+
+    //Dashboard routes
+
+    Route::get('/admin/dashboard', [AuthController::class, 'admin_dashboard'])->name('admin.dashboard');
+    Route::get('/doctor/dashboard', [AuthController::class, 'doctor_dashboard'])->name('doctor.dashboard');
+
+    Route::get('/doctors/patients', [PatientController::class, 'index'])->name('admin.doctors.patients.index');
+    Route::post('/doctors/patients/{id}', [PatientController::class, 'update'])->name('admin.doctors.patients.update');
+    Route::post('/doctors/patients/delete/{id}', [PatientController::class, 'delete'])->name('admin.doctors.patients.delete');
 });
+
+//Stripe Routes
 
 

@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rule;
 class ImageController extends Controller
 {
     public function upload(Request $request)
     {
+     
         // Validate request data
         $validatedData = $this->validateImageData($request);
     
@@ -30,15 +31,16 @@ class ImageController extends Controller
         return $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust file validation rules as needed
             'patient_phone' => 'string|required|size:11',
-            'patient_name' => '',
-            'gender' => '',
-            'blood_group' => '',
-            'address' => '',
+            'patient_name' => 'nullable|string|max:255',    
+            'blood_group' => 'nullable|string|max:255',
+            'gender' => ['nullable', Rule::in(['Male', 'Female', 'Other'])],
+            'address' => 'nullable|string|max:255',
         ]);
     }
     
     private function createOrUpdatePatient($validatedData)
     {
+       
         return Patient::firstOrCreate(
             ['phone' => $validatedData['patient_phone']],
             [
@@ -80,7 +82,7 @@ class ImageController extends Controller
             $outputs = $predictions['outputs'];
             $result = $predictions['prediction'];
     
-            return view('welcome', [
+            return response()->json([
                 'outputs' => $outputs,
                 'result' => $result
             ]);
@@ -92,12 +94,13 @@ class ImageController extends Controller
             // Flash API error message to session
             session()->flash('api_error', 'Failed to get predictions from the API.');
     
-            // Redirect back with validation errors
-            return back()->withErrors([
-                'api_error' => 'Failed to get predictions from the API.',
-                'image' => 'No image uploaded.',
-            ]);
+            // Return JSON response with error message
+            return response()->json([
+                'error' => 'Failed to get predictions from the API.',
+                'status_code' => $statusCode
+            ], $statusCode); // Return appropriate status code
         }
     }
+    
     
 }
