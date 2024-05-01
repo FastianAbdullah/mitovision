@@ -16,9 +16,8 @@ use App\Http\Controllers\ReportController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {return view('welcome');});
 
-Route::get('/dashboard', function () {return view('layouts.doctor.app');});
+Route::get('/',[AuthController::class,'home'])->name('home');
 
 Route::group(['middleware' => 'guest'],function()
 {
@@ -39,6 +38,10 @@ Route::group(['middleware' => 'auth'],function()
     Route::get('/home',[AuthController::class,'home'])->name('home');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
+    //stripe control
+    Route::post('/session', [StripeController::class,'session'])->name('session');
+    Route::get('/success', [StripeController::class,'success'])->name('success');
+
     //Dashboard routes
 
     Route::get('/admin/dashboard', [AuthController::class, 'admin_dashboard'])->name('admin.dashboard');
@@ -55,6 +58,4 @@ Route::group(['middleware' => 'auth'],function()
 
 //Stripe Routes
 
-// Route::get('/', [StripeController::class,'checkout'])->name('checkout');
-Route::post('/session', [StripeController::class,'session'])->name('session');
-Route::get('/success', [StripeController::class,'session'])->name('success');
+

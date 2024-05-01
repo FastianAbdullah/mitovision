@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\Plan;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Session;
+use Spatie\Permission\Traits\HasRoles;
+//use App\Http\Controllers\Session;
 
 class AuthController extends Controller
 {
@@ -75,14 +78,14 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name, // Using 'name' from request
             'email' => $request->email,
-            'password' => \Hash::make($request->password),
+            'password' => Hash::make($request->password),
             'plan_id' => 1
         ]);
 
         $user->assignRole('doctor');
 
 
-        if (\Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             return redirect()->route('doctor.dashboard');
         }
 
@@ -92,13 +95,14 @@ class AuthController extends Controller
     }
     public function logout()
     {
-        \Session::flush();
-        \Auth::logout();
+        Session::flush();
+        Auth::logout();
         return redirect('login');
     }
     public function home()
     {
-        return view('welcome');
+        $plans = Plan::all();
+        return view('welcome',compact('plans'));
     }
     public function admin_dashboard()
     {

@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
     }
     public function register()
     {
-        //
+        // Register stripe api key
+        //$user = new User(Config::get('services.stripe.sk'));
     }
 
     /**
