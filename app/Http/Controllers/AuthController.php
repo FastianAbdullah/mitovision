@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 class AuthController extends Controller
 {
@@ -18,7 +20,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]));
 
-        if(\Auth::attempt($request->only('email', 'password')))
+        if(Auth::attempt($request->only('email', 'password')))
         {
             return redirect('home');
         }
@@ -42,12 +44,12 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name, // Using 'name' from request
             'email' => $request->email,
-            'password' => \Hash::make($request->password),
+            'password' => Hash::make($request->password),
             'plan_id' => 1
         ]);
     
     
-        if(\Auth::attempt($request->only('email', 'password')))
+        if(Auth::attempt($request->only('email', 'password')))
         {
             return redirect('login');
         }
@@ -58,8 +60,8 @@ class AuthController extends Controller
     }   
     public function logout()
     {
-        \Session::flush();
-        \Auth::logout();
+        Session::flush();
+        Auth::logout();
         return redirect('/');
     }
     public function home()
