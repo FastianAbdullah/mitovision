@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'stripe' =>[
+        'pk' => env('STRIPE_PK'),
+        'sk' =>env('STRIPE_SK')
+    ],
+
 ];
