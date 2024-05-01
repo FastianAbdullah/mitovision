@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'],function()
     Route::get('/doctor/dashboard', [AuthController::class, 'doctor_dashboard'])->name('doctor.dashboard');
 
     Route::get('/doctors/patients', [PatientController::class, 'index'])->name('admin.doctors.patients.index');
+    Route::post('/doctors/patients/{id}', [PatientController::class, 'update'])->name('admin.doctors.patients.update');
+    Route::post('/doctors/patients/delete/{id}', [PatientController::class, 'delete'])->name('admin.doctors.patients.delete');
 });
 
 //Stripe Routes

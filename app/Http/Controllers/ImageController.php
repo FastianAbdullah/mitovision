@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rule;
 class ImageController extends Controller
 {
     public function upload(Request $request)
@@ -31,10 +31,10 @@ class ImageController extends Controller
         return $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust file validation rules as needed
             'patient_phone' => 'string|required|size:11',
-            'patient_name' => '',
-            'gender' => '',
-            'blood_group' => '',
-            'address' => '',
+            'patient_name' => 'nullable|string|max:255',    
+            'blood_group' => 'nullable|string|max:255',
+            'gender' => ['nullable', Rule::in(['Male', 'Female', 'Other'])],
+            'address' => 'nullable|string|max:255',
         ]);
     }
     
