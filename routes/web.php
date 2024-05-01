@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,8 @@ use App\Http\Controllers\StripeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {return view('welcome');});
 
-
+Route::get('/',[WelcomeController::class,'index'])->name('home');
 
 Route::group(['middleware' => 'guest'],function()
 {
@@ -37,8 +38,10 @@ Route::group(['middleware' => 'auth'],function()
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });
 
-// Route::get('/', [StripeController::class,'checkout'])->name('checkout');
+ Route::get('/checkout', [StripeController::class,'checkout'])->name('checkout');
 
 Route::post('/session', [StripeController::class,'session'])->name('session');
 
 Route::get('/success', [StripeController::class,'session'])->name('success');
+
+//Route::get('/', [UserController::class,'setApikey'])->name('set');
