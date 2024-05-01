@@ -14,7 +14,7 @@ class StripeController extends Controller
 
     public function session()
     {
-        \Stripe\Stripe::setApiKey(env('STRIPE_SK'));
+        \Stripe\Stripe::setApiKey(config('stripe.sk'));
 
         $session = \Stripe\Checkout\Session::create([
             'line_items'  => [
