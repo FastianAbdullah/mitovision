@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
 class ReportController extends Controller
 {
+
     public function index()
     {
         $user = Auth::user();
         
         $reports = $user->reports()->get();
 
-        return view('admin_panel.doctor_panel.reports', compact('reports'));
+        return view('admin_panel.doctor_panel.reports',compact('reports'));
     }
     public function update($id, Request $request)
     {
