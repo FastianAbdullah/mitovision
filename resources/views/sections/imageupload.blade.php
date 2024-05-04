@@ -10,7 +10,26 @@
 </head>
 
 <body>
-
+    <!-- Modal -->
+    <div class="modal fade" id="Upload-Exceed-Dialog" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="ModalLongTitle">Count Exceeded!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p>User Your Image Upload Count has exceeded.Please Upgrade your plan.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="GoToPlansButton" data-dismiss="modal">Go To Plans</button>
+            </div>
+        </div>
+        </div>
+    </div>
     <div class="container mt-5" id="upload">
         <div class="row">
             <!-- Left Column -->
@@ -102,6 +121,9 @@
                 checkLoginAndUpload(); // Call function to check login and upload image
             });
 
+            $('#GoToPlansButton').on('click',function(){
+                GoToServices();
+            });
             // Bind event listener to Select Image button
             $('#selectImageButton').on('click', function() {
                 clearPreviousResults();
@@ -121,6 +143,9 @@
             });
         });
 
+        function GoToServices(){
+            document.getElementById('servicesAnchor').click();
+        }
         function checkLoginBeforeSelectingImage() {
             // Simulate login checking here if needed
             @guest
@@ -158,7 +183,8 @@
                     }
                     else{
                         //Do pop-ups if limit exceeded.
-                        alert('User Your Image Upload Count has exceeded!');
+                        open_dialog_box();
+                        //alert('User Your Image Upload Count has exceeded!');
                     }
                 },
                 error: function(xhr,textstatus,errorThrown){
@@ -167,7 +193,11 @@
                 }
             });
         }
-        
+
+        function open_dialog_box(){
+            $('#Upload-Exceed-Dialog').modal('show');
+        }
+
         function uploadImage() {
             var formData = new FormData($('#upload-form')[0]); // Get form data
             formData.append('_token', '{{ csrf_token() }}'); // Append CSRF token
