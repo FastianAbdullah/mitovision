@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Stripe\StripeClient;
 use Stripe\Webhook;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StripeController extends Controller
 {
+    public function __construct(){
+        $this->middleware("auth")->except(['donate']);
+    }
     public function session(Request $request)
     {
         $id = $request->get("id");
@@ -154,6 +156,41 @@ class StripeController extends Controller
         }
         
         return response('OK',200);
+    }
+
+    public function donate(Request $request){
+
+        $request->validate([
+            'donationAmount'=> 'required|numeric|min:0',
+            'currency' =>'required|string|in:usd,eur,gbp',
+        ]);
+        
+        $amount  = $request->input('donationAmount');
+        $currency = $request->input('currency');
+
+        Stripe::setApiKey(Config::get('stripe.sk'));
+
+        $session = \Stripe\Checkout\Session::create([
+            'line_items'  => [
+                [
+                    'price_data' => [
+                        'currency'     => $currency,
+                        'product_data' => [
+                            'name' => 'Donation',
+                            'description' => 'Donate For a Better Cause',
+                        ],
+                        'unit_amount'  => $amount * 100,
+                    ],
+                    'quantity'   => 1,
+                ],
+            ],
+            'mode'        => 'payment',
+            'success_url' => route('home'),
+            'cancel_url'  => route('home'),
+        ]);   
+        
+        return redirect()->away($session->url);
+
     }
 
 }

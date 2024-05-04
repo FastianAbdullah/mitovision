@@ -17,8 +17,13 @@ use App\Http\Controllers\ReportController;
 |
 */
 
+//root directory route.
 Route::get('/',[AuthController::class,'home'])->name('home');
 
+//stripe donation route.
+Route::post('/donate',[StripeController::class,'donate'])->name('donate');
+
+//Guest routes.
 Route::group(['middleware' => 'guest'],function()
 {
     Route::get('/login',[AuthController::class,'index'])->name('login');
@@ -29,7 +34,7 @@ Route::group(['middleware' => 'guest'],function()
 
 });
 
-
+//Authenticated user routes.
 Route::group(['middleware' => 'auth'],function()
 {
     //Authenticated User Routes
@@ -42,7 +47,7 @@ Route::group(['middleware' => 'auth'],function()
     //stripe control
     Route::post('/session', [StripeController::class,'session'])->name('session');
     Route::get('/success/{id}/{session_id?}', [StripeController::class,'success'])->name('success');
-    
+
     //Dashboard routes
     
     Route::get('/admin/dashboard', [AuthController::class, 'admin_dashboard'])->name('admin.dashboard');
@@ -64,4 +69,5 @@ Route::group(['middleware' => 'auth'],function()
 |
 */
 Route::post('/webhook', [StripeController::class,'webhook'])->name('webhook');
+
 

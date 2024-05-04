@@ -24,6 +24,4 @@
 
     @include('sections.donation')
 
-
-
 @endsection
