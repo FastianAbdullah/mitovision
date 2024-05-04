@@ -15,9 +15,6 @@
                         <div class="d-flex justify-content-center align-items-center">
                             <img src="{{$plan['image_path']}}" class="img-fluid w-50" alt="Responsive image">
                         </div>
-                        {{-- <div class="card-image">
-                            <img class="img-fluid w-50" src="{{$plan['image_path']}}" alt="alternative">
-                        </div> --}}
                         <div class="card-body">
                             <h3 class="card-title">{{$plan['plan']}} Plan</h3>
                             <p>{{$plan['description']}}</p>

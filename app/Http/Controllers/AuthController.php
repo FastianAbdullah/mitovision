@@ -112,9 +112,9 @@ class AuthController extends Controller
     public function home()
     {
         $images = [
-            1 =>'images\Free-Plan-v1.jpeg',
-            2 => 'images\Gold-Plan-v1.jpeg',
-            3 => 'images\Platinum-Plan.jpeg'
+            1 =>'images\Free-Plan-v2.jpeg',
+            2 => 'images\Gold-Plan-v2.png',
+            3 => 'images\Platinum-Plan-v2.png'
         ];
         $plans = Plan::all();
 
