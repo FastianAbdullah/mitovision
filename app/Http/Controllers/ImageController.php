@@ -6,7 +6,9 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Image;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Plan;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 class ImageController extends Controller
 {
@@ -67,9 +69,8 @@ class ImageController extends Controller
     
             // Associate the image with the patient and save it
             $patient->images()->save($image);
-    
             // Sending the Image Filename to Flask API
-            return Http::get('http://127.0.0.1:5001/predict', [
+            return Http::get('http://127.0.0.1:5002/predict', [
                 'image_filename' => basename($path),
             ]);
         }
@@ -101,6 +102,23 @@ class ImageController extends Controller
             ], $statusCode); // Return appropriate status code
         }
     }
-    
-    
+    public function check_limit(){
+
+        $user_id = Auth::user()->getAuthIdentifier();
+        $user = User::find($user_id);
+
+        $user_plan = Plan::find($user['plan_id']);
+        $user_images_count=$user->images()->count();
+
+        if($user_images_count >= $user_plan['max_images']){
+            return response()->json([
+                'limit_cross' => true
+            ]);
+        }
+        else{
+            return response()->json([
+                'limit_cross' => false
+            ]);
+        }
+    }
 }

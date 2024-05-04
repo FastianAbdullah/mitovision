@@ -133,22 +133,41 @@
         }
 
         function checkLoginAndUpload() {
-            // alert("testing")
             // Simulate login checking here if needed
             @guest
             // Navigate to services section
             document.getElementById('servicesAnchor').click();
         @else
-
-
-            showLoader(); // Show the loader
-            setTimeout(function() {
-                uploadImage(); // Call function to upload image after 3 seconds
-
-            },100);
+            check_limit_and_upload();
         @endguest
         }
 
+        function check_limit_and_upload(){
+            $.ajax({
+                url:'/check-limit',
+                type: 'GET',
+                contentType:false,
+                processData:false,
+                success: function(response){
+                    // true response means limit crossed and vice versa.
+                    if(response.limit_cross == false){
+                        showLoader(); // Show the loader
+                        setTimeout(function() {
+                            uploadImage(); // Call function to upload image after 3 seconds
+                        },10);
+                    }
+                    else{
+                        //Do pop-ups if limit exceeded.
+                        alert('User Your Image Upload Count has exceeded!');
+                    }
+                },
+                error: function(xhr,textstatus,errorThrown){
+                    //alert error msg if occured.
+                    alert('Error Occured while retriving Response');
+                }
+            });
+        }
+        
         function uploadImage() {
             var formData = new FormData($('#upload-form')[0]); // Get form data
             formData.append('_token', '{{ csrf_token() }}'); // Append CSRF token

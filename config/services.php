@@ -33,7 +33,8 @@ return [
 
     'stripe' =>[
         'pk' => env('STRIPE_PK'),
-        'sk' =>env('STRIPE_SK')
+        'sk' => env('STRIPE_SK'),
+        'wk' => env('STRIPE_WK'),
     ],
 
 ];

@@ -8,6 +8,7 @@
         </div> <!-- end of row -->
         <div class="row">
             <div class="col-lg-12">
+                <!-- dynamic Layout of Plans -->
                 @foreach($plans as $plan)
                     <!-- Card -->
                     <div class="card">
@@ -40,6 +41,7 @@
                             @endif
                         </div> <!-- end of button-container -->
                     </div>
+                    <!-- end of layout -->
                 @endforeach
                 
                 <!-- end of card -->
@@ -47,3 +49,10 @@
         </div> <!-- end of row -->
     </div> <!-- end of container -->
 </div> <!-- end of cards-2 -->
+
+<script>
+    $(document).ready(function(){
+        $('#checkout-live-button').on('click',function(){
+        })
+    });
+</script>
