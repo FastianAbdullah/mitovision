@@ -32,8 +32,9 @@ class AuthController extends Controller
         {
             // Retrieve the logged-in user (doctor)
 
-            $user = Auth::user();
-           
+            $user_id = Auth::user()->getAuthIdentifier();
+            $user = User::find($user_id);
+
             // Redirect user based on role
             if ($user->hasRole('super admin'))
             {
