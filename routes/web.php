@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,10 @@ Route::group(['middleware' => 'auth'],function()
     Route::get('/doctors/patients', [PatientController::class, 'index'])->name('admin.doctors.patients.index');
     Route::post('/doctors/patients/{id}', [PatientController::class, 'update'])->name('admin.doctors.patients.update');
     Route::post('/doctors/patients/delete/{id}', [PatientController::class, 'delete'])->name('admin.doctors.patients.delete');
+
+    Route::get('/doctors/patients/reports', [ReportController::class, 'index'])->name('admin.doctors.patients.reports');
+    Route::post('/doctors/patients/reports/{id}', [ReportController::class, 'update'])->name('admin.doctors.patients.reports.update');
+    
 });
 
 /* 

@@ -23,6 +23,10 @@ class Image extends Model
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'patient_phone', 'phone');
+        return $this->belongsTo(Patient::class);
+    }
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 }

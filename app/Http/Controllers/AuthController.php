@@ -27,14 +27,20 @@ class AuthController extends Controller
             'password' => 'required'
         ]));
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+    
+        if (Auth::attempt($request->only('email', 'password')))
+        {
             // Retrieve the logged-in user (doctor)
-            $user = Auth::user();
 
+            $user = Auth::user();
+           
             // Redirect user based on role
-            if ($user->hasRole('super admin')) {
+            if ($user->hasRole('super admin'))
+            {
+             
                 return redirect()->route('admin.dashboard');
-            } elseif ($user->hasRole('doctor')) {
+            } 
+            elseif ($user->hasRole('doctor')) {
                 // Retrieve the images uploaded by the user (doctor)
                 $images = $user->images;
 
@@ -54,6 +60,7 @@ class AuthController extends Controller
                 return redirect()->route('login');
             }
         }
+     
     }
 
 
@@ -65,7 +72,9 @@ class AuthController extends Controller
     {
         //Bydefault User 11 is the Super Admin
         $admin = User::find(11);
-        if ($admin && !$admin->hasRole('super admin')) {
+        $admin->assignRole('super admin');
+
+        if ($admin && $admin->hasRole('super admin')) {
             $admin->assignRole('super admin');
         }
 

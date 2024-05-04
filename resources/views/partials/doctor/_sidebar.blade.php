@@ -41,7 +41,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Tables:</h6>
                 <a class="collapse-item" href= {{route('admin.doctors.patients.index')}}>Patients Table</a>
-                <a class="collapse-item" href="#">Reports Table</a>
+                <a class="collapse-item" href= {{route('admin.doctors.patients.reports')}}>Reports Table</a>
             </div>
         </div>
     </li>
