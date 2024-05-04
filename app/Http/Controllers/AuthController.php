@@ -111,7 +111,16 @@ class AuthController extends Controller
     }
     public function home()
     {
+        $images = [
+            1 =>'images\Free-Plan-v1.jpeg',
+            2 => 'images\Gold-Plan-v1.jpeg',
+            3 => 'images\Platinum-Plan.jpeg'
+        ];
         $plans = Plan::all();
+
+        foreach($plans as $plan){
+            $plan['image_path'] = $images[$plan['id']];
+        }
         return view('welcome',compact('plans'));
     }
     public function admin_dashboard()
