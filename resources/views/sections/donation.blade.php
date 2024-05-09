@@ -18,7 +18,7 @@
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" id="donationAmount" name="donationAmount" step="0.01" min="0" placeholder="Enter amount" required>
+                                    <input type="number" class="form-control" id="donationAmount" name="donationAmount" step="0.01" min="1" max="999999" placeholder="Enter amount" required>
                                 </div>
                                 <div class="col-lg-6">
                                     <select class="form-control" id="currency" name="currency" required>
