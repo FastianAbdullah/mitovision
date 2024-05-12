@@ -1,5 +1,13 @@
 @extends('layouts.auth')
-
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #113448;">
+    <div class="container">
+        <a class="navbar-brand" href = "{{ route('welcome') }}" style="color: white; font-weight: bold;">MitoVision</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
 <section class="vh-100">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -16,7 +24,7 @@
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li>Invalid Email or Password</li>
                                 @endforeach
                             </ul>
                         </div>
