@@ -34,7 +34,7 @@ class ImageController extends Controller
     private function validateImageData(Request $request)
     {
         return $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif', // Adjust file validation rules as needed
+            'image' => 'required|image|jpeg,png,jpg', // Adjust file validation rules as needed
             'patient_phone' => 'string|required|size:11',
             'patient_name' => 'nullable|string|max:255',
             'blood_group' => 'nullable|string|max:255',

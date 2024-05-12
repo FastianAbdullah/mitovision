@@ -18,7 +18,7 @@ use App\Http\Controllers\ReportController;
 */
 
 //root directory route.
-Route::get('/',[AuthController::class,'home'])->name('home');
+Route::get('/',[AuthController::class,'welcome'])->name('welcome');
 
 //stripe donation route.
 Route::post('/donate',[StripeController::class,'donate'])->name('donate');

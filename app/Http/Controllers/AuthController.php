@@ -16,12 +16,28 @@ class AuthController extends Controller
 {
     //
 
+    public function welcome()
+    {
+        
+        $images = [
+            1 =>'images\Free-Plan-v2.jpeg',
+            2 => 'images\Gold-Plan-v2.png',
+            3 => 'images\Platinum-Plan-v2.png'
+        ];
+        $plans = Plan::all();
+
+        foreach($plans as $plan){
+            $plan['image_path'] = $images[$plan['id']];
+        }
+        return view('welcome',compact('plans'));
+    }
     public function index()
     {
         return view('auth.login');
     }
     public function login(Request $request)
-    {
+    { 
+       
         $request->validate(([
             'email' => 'required',
             'password' => 'required'
@@ -34,14 +50,15 @@ class AuthController extends Controller
 
             $user_id = Auth::user()->getAuthIdentifier();
             $user = User::find($user_id);
-
+            
             // Redirect user based on role
             if ($user->hasRole('super admin'))
             {
-             
                 return redirect()->route('admin.dashboard');
             } 
-            elseif ($user->hasRole('doctor')) {
+            elseif ($user->hasRole('doctor'))
+            {
+               
                 // Retrieve the images uploaded by the user (doctor)
                 $images = $user->images;
 
@@ -53,13 +70,15 @@ class AuthController extends Controller
 
                 // Pass patients data to the doctor dashboard view
                 session(['patients' => $patients]);
-
+             
                 // Redirect to the desired route
                 return redirect()->route('doctor.dashboard');
-            } else {
-                // Default redirect if user has no role or unrecognized role
-                return redirect()->route('login');
-            }
+            }     
+        }
+        else
+        {
+            // Default redirect if user has no role or unrecognized role
+            return redirect('login')->withErrors(['error' => 'Error']);
         }
      
     }
@@ -71,37 +90,35 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        //Bydefault User 11 is the Super Admin
+        //By default User 11 is the Super Admin
         $admin = User::find(11);
         $admin->assignRole('super admin');
-
+    
         if ($admin && $admin->hasRole('super admin')) {
             $admin->assignRole('super admin');
         }
-
+    
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:6' // Changed 6 to min:6 for minimum length
         ]);
-
+    
         $user = User::create([
-            'name' => $request->name, // Using 'name' from request
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'plan_id' => 1
         ]);
-
+    
         $user->assignRole('doctor');
-
-
+    
         if (Auth::attempt($request->only('email', 'password'))) {
             return redirect()->route('doctor.dashboard');
         }
-
-        return redirect('register')->withErrors('Error');
-
-
+    
+        // If authentication attempt fails, redirect back with validation errors
+        return redirect('register')->withErrors(['error' => 'Error']); // Pass the error to the view
     }
     public function logout()
     {
@@ -111,6 +128,7 @@ class AuthController extends Controller
     }
     public function home()
     {
+        
         $images = [
             1 =>'images\Free-Plan-v2.jpeg',
             2 => 'images\Gold-Plan-v2.png',
