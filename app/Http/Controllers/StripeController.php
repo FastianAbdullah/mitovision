@@ -160,8 +160,10 @@ class StripeController extends Controller
 
     public function donate(Request $request){
 
+        //validation testing for currency and donationAmount.
+        //Stripe Max Donation Amount is $999,999.99
         $request->validate([
-            'donationAmount'=> 'required|numeric|min:0',
+            'donationAmount'=> 'required|numeric|min:1|max:999999', 
             'currency' =>'required|string|in:usd,eur,gbp',
         ]);
         
