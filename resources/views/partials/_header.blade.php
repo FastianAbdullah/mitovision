@@ -34,9 +34,11 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle page-scroll" href="#profile" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="img-profile rounded-circle" src="{{asset('images/undraw_profile.svg')}}" style="width: 30; height: 30px;">
-                </a>
+                @if (Auth::check())
+                    <a class="nav-link dropdown-toggle page-scroll" href="#profile" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img class="img-profile rounded-circle" src="{{asset('images/undraw_profile.svg')}}" style="width: 30; height: 30px;">
+                    </a>
+                @endif
                 
                 @if(Auth::check())
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -44,8 +46,8 @@
                    
                         <div class="dropdown-items-divide-hr"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"><span class="item-text">Logout</span></a>
-                @endif
                 </div>
+                @endif
             </li>
         </ul>
     </div>
