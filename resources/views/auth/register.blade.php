@@ -1,13 +1,12 @@
 @extends('layouts.auth')
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #113448;">
-    <div class="container">
-        <a class="navbar-brand" href="#" style="color: white; font-weight: bold;">MitoVision</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-      
-    </div>
+    <!-- Image Logo -->
+    <a class="navbar-brand page-scroll" href="{{route('welcome')}}">
+        <img src="{{asset('images/MitoVison.png')}}" alt="Logo" height="60">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </nav>
 <br><br>
 
