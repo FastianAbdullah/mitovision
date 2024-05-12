@@ -34,7 +34,7 @@ class ImageController extends Controller
     private function validateImageData(Request $request)
     {
         return $request->validate([
-            'image' => 'required|image|jpeg,png,jpg', // Adjust file validation rules as needed
+            'image' => 'required|image|mimes:jpeg,png,jpg',
             'patient_phone' => 'string|required|size:11',
             'patient_name' => 'nullable|string|max:255',
             'blood_group' => 'nullable|string|max:255',
@@ -58,6 +58,7 @@ class ImageController extends Controller
 
     private function handleImageUpload(Request $request, $validatedData, $patient)
     {
+       
         if ($request->hasFile('image')) {
             // Store the uploaded file in the storage/app/public directory
             $path = $request->file('image')->store('images', 'public');
@@ -68,7 +69,7 @@ class ImageController extends Controller
                 'image' => $imageUrl,
                 'user_id' => auth()->user()->id,
             ]);
-
+          
             $patient->images()->save($image);
 
             // Sending the Image Filename to Flask API
